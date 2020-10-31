@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Archshooter v0.01</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">body {margin: 0px;padding: 0px; overflow: hidden; display: flex; justify-content: center; align-content: center; align-items: center} header, form, div, h1, section, footer,br, p,textarea,input,button {margin: 0px;padding: 0px;}</style>
+        <link rel="shortcut icon"  type="image/x-icon" href="./favicon.ico">
+        <link rel="stylesheet" type="text/css" href="index.css">
+    </head>
+    <body id="body">
+        <!-- ===== CODE ===== -->
+        <script src="index.js"></script>
+        <!-- ==================================== -->
+        <div id="GAME_AREA"></div>
+        <!-- -->
+        <script type="text/javascript">
+        
+            //Set Game Area
+            jayui.main_area = "GAME_AREA";
+            setInterval(function(){
+                var w_x = parseInt(window.innerWidth)
+                if(w_x >= 600){
+                    w_x = 600;
+                };
+                jayui.dst(jayui.main_area,"width",w_x.toString().concat("px"));
+                jayui.dst(jayui.main_area,"height",parseInt(window.innerHeight).toString().concat("px"));
+            },100);
+
+            //Initialize Main Area
+            window.onload = function(){
+                //Detect version
+                var local_storage = window.localStorage;
+                var build_version = local_storage.getItem("build_version");
+                if(build_version !== jaydatabase.build_version){
+                    local_storage.clear();
+                };
+                //Start first the engine so that i_battle.js will not get errors!
+                //battledata must be load first before the UI
+                jayengine.initialize();
+
+                //Then the enemy second
+                jayenemy.initialize();
+
+                //Client will always be the last
+                jayclient.initialize();
+                
+            };
+
+            document.onkeypress = function (e) {
+                 e = e || window.event;
+                 jaykeypress.activate(e.keyCode);
+            };
+            
+        </script>
+    </body>
+</html>
